@@ -34,8 +34,7 @@ echo Done!  Combined file created: %output%
 @echo off
 
 SET mod_name=MMMguns
-SET work_directory=%~dp0
-cd %work_directory%
+cd %source%
 
 del ..\%mod_name%\*.iwd
 
@@ -43,10 +42,13 @@ del ..\%mod_name%\*.iwd
 
 @echo off
 
-SET work_directory=%~dp0
-cd %work_directory%
+cd %source%
 
-xcopy localizedstrings ..\..\raw\english\localizedstrings\ /SY
+xcopy english ..\..\raw\english\ /SY
+xcopy images ..\..\raw\images\ /SY
+xcopy weapons ..\..\raw\weapons\ /SY
+xcopy material_properties ..\..\raw\material_properties\ /SY
+xcopy materials ..\..\raw\materials\ /SY
 xcopy maps ..\..\raw\maps\ /SY
 xcopy mp ..\..\raw\mp\ /SY
 xcopy shock ..\..\raw\shock\ /SY
@@ -55,6 +57,10 @@ xcopy soundaliases ..\..\raw\soundaliases\ /SY
 xcopy ui ..\..\raw\ui\ /SY
 xcopy ui_mp ..\..\raw\ui_mp\ /SY
 xcopy xmodel ..\..\raw\xmodel\ /SY
+xcopy xanim ..\..\raw\xanim\ /SY
+xcopy xmodelparts ..\..\raw\xmodelparts\ /SY
+xcopy xmodelpieces ..\..\raw\xmodelpieces\ /SY
+xcopy xmodelsurfs ..\..\raw\xmodelsurfs\ /SY
 
 copy mod.csv ..\..\zone_source /Y
 
@@ -64,7 +70,7 @@ linker_pc.exe -language english -compress -cleanup mod -verbose
 cd ..\mods\MMMguns
 copy ..\..\zone\english\mod.ff
 
-cd %work_directory%
+cd %source%
 
 for %%D in (
 images
@@ -77,5 +83,8 @@ xanim
 xmodel
 xmodelparts
 xmodelsurfs
+xmodelpieces
 ) do (rd /S /Q "%%D")
 del /q mod.csv
+
+pause
